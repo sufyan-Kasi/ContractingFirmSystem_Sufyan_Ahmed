@@ -120,4 +120,5 @@ Delete `firm.db` and let app recreate it.
 - User roles (Admin / Employee)  
 - Dark mode  
 - Export to PDF/Excel  
+
 - Dashboard charts  
