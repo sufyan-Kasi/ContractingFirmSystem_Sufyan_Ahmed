@@ -10,6 +10,165 @@ class DashboardApp(QtWidgets.QMainWindow):
         super(DashboardApp, self).__init__()
         self.ui = Ui_DashboardWindow()
         self.ui.setupUi(self)
+        
+        # 1. Make window full screen
+        self.showMaximized()
+
+        # 2. Apply spacing and margins to all tabs
+        tab_widget = self.ui.main_tabs
+        for i in range(tab_widget.count()):
+            page = tab_widget.widget(i)
+            layout = page.layout()
+            if not layout:
+                layout = QtWidgets.QVBoxLayout(page)  
+                page.setLayout(layout)
+            layout.setSpacing(15)                  
+            layout.setContentsMargins(20, 20, 20, 20)
+
+        # 3. Fix all buttons inside central widget
+        for button in self.ui.centralwidget.findChildren(QtWidgets.QPushButton):
+            button.setSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+            button.setMaximumWidth(120)
+
+        # 4. Make all tables expand properly (only horizontal stretch)
+        for table in self.ui.centralwidget.findChildren(QtWidgets.QTableWidget):
+            table.horizontalHeader().setSectionResizeMode(QtWidgets.QHeaderView.Stretch)  # stretch columns
+            table.verticalHeader().setSectionResizeMode(QtWidgets.QHeaderView.ResizeToContents)  # keep rows natural
+
+        # Increase font size for buttons
+        for button in self.ui.centralwidget.findChildren(QtWidgets.QPushButton):
+            font = button.font()
+            font.setPointSize(12)  
+            button.setFont(font)
+            button.setMinimumHeight(35)  
+
+        # Increase font size for labels
+        for label in self.ui.centralwidget.findChildren(QtWidgets.QLabel):
+            font = label.font()
+            font.setPointSize(12)
+            label.setFont(font)
+
+        # Increase font size for LineEdits and TextEdits
+        for edit in self.ui.centralwidget.findChildren((QtWidgets.QLineEdit, QtWidgets.QTextEdit, QtWidgets.QPlainTextEdit)):
+            font = edit.font()
+            font.setPointSize(12)
+            edit.setFont(font)
+            edit.setMinimumHeight(30) 
+
+        # Increase font size for ComboBoxes
+        for combo in self.ui.centralwidget.findChildren(QtWidgets.QComboBox):
+            font = combo.font()
+            font.setPointSize(12)
+            combo.setFont(font)
+            combo.setMinimumHeight(30)  
+
+        # ------------------ Modern Dark Theme ------------------
+        dark_stylesheet = """
+        /* Main Window and central widget */
+        QMainWindow, QWidget {
+            background-color: #121212;
+            color: #e0e0e0;
+            font-family: "Segoe UI", Arial, sans-serif;
+            font-size: 12pt;
+        }
+
+        /* Buttons */
+        QPushButton {
+            background-color: #2c2c2c;
+            color: #e0e0e0;
+            border: 1px solid #3a3a3a;
+            border-radius: 6px;
+            padding: 8px;
+        }
+        QPushButton:hover {
+            background-color: #3a3a3a;
+        }
+        QPushButton:pressed {
+            background-color: #505050;
+        }
+
+        /* Labels */
+        QLabel {
+            color: #e0e0e0;
+        }
+
+        /* LineEdits, TextEdits, PlainTextEdits */
+        QLineEdit, QTextEdit, QPlainTextEdit {
+            background-color: #1e1e1e;
+            color: #e0e0e0;
+            border: 1px solid #3a3a3a;
+            border-radius: 4px;
+            padding: 4px;
+        }
+
+        /* ComboBoxes */
+        QComboBox {
+            background-color: #1e1e1e;
+            color: #e0e0e0;
+            border: 1px solid #3a3a3a;
+            border-radius: 4px;
+            padding: 4px;
+        }
+        QComboBox QAbstractItemView {
+            background-color: #1e1e1e;
+            color: #e0e0e0;
+            selection-background-color: #3a3a3a;
+        }
+
+        /* Tables */
+        QTableWidget, QTableView {
+            background-color: #1e1e1e;
+            color: #e0e0e0;
+            gridline-color: #3a3a3a;
+            border: 1px solid #3a3a3a;
+        }
+        QHeaderView::section {
+            background-color: #2c2c2c;
+            color: #e0e0e0;
+            padding: 4px;
+            border: 1px solid #3a3a3a;
+        }
+
+        /* TabWidget */
+        QTabWidget::pane {
+            border: 1px solid #3a3a3a;
+            margin: 10px;
+        }
+        QTabBar::tab {
+            background: #2c2c2c;
+            color: #e0e0e0;
+            padding: 8px 15px;
+            border-top-left-radius: 6px;
+            border-top-right-radius: 6px;
+        }
+        QTabBar::tab:selected {
+            background: #3a3a3a;
+            font-weight: bold;
+        }
+
+        /* ScrollBars */
+        QScrollBar:vertical, QScrollBar:horizontal {
+            background: #1e1e1e;
+            width: 12px;
+            height: 12px;
+            margin: 0px;
+        }
+        QScrollBar::handle {
+            background: #3a3a3a;
+            border-radius: 6px;
+        }
+        QScrollBar::handle:hover {
+            background: #505050;
+        }
+        QScrollBar::add-line, QScrollBar::sub-line {
+            background: none;
+        }
+        """
+
+        self.setStyleSheet(dark_stylesheet)
+
+
+        self.showMaximized()  
         self.username = username
         self.setWindowTitle(f"Dashboard - Logged in as {self.username}")
 
@@ -591,6 +750,54 @@ class LoginApp(QtWidgets.QMainWindow):
         super(LoginApp, self).__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+        
+         # ------------------ Dark Blue Login Theme ------------------
+        login_stylesheet = """
+        QWidget {
+            background-color: #0D1B2A;
+            color: #E0E0E0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            font-size: 12pt;
+        }
+
+        QLabel { color: #E0E0E0; }
+
+        QLineEdit {
+            background-color: #1B263B;
+            color: #E0E0E0;
+            border: 1px solid #415A77;
+            border-radius: 5px;
+            padding: 6px;
+        }
+        QLineEdit:focus { border: 1px solid #778DA9; }
+
+        QPushButton {
+            background-color: #415A77;
+            color: #E0E0E0;
+            border: 1px solid #778DA9;
+            border-radius: 6px;
+            padding: 8px;
+            font-weight: bold;
+        }
+        QPushButton:hover { background-color: #778DA9; }
+        QPushButton:pressed { background-color: #1B263B; }
+
+        QComboBox {
+            background-color: #1B263B;
+            color: #E0E0E0;
+            border: 1px solid #415A77;
+            border-radius: 4px;
+            padding: 4px;
+        }
+        QComboBox QAbstractItemView {
+            background-color: #1B263B;
+            color: #E0E0E0;
+            selection-background-color: #415A77;
+        }
+        """
+        self.setStyleSheet(login_stylesheet)  # <-- apply theme
+        # ------------------ End Theme ------------------
+        
         # fix password field echo mode here
         self.ui.password_input.setEchoMode(QtWidgets.QLineEdit.Password)
         self.ui.login_button.clicked.connect(self.handle_login)
