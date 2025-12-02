@@ -106,6 +106,10 @@ To reset or recreate database, delete the file and rerun the app.
 Regenerate UI Python files if you modify UI:
 
 
+### ❗ Login UI Issue  
+Change the Error Line With:
+self.password_input.setEchoMode(QtWidgets.QLineEdit.Password)
+
 
 pyuic5 ui/login.ui -o ui/login_ui.py
 pyuic5 ui/dashboard.ui -o ui/dashboard_ui.py
@@ -122,3 +126,4 @@ Delete `firm.db` and let app recreate it.
 - Export to PDF/Excel  
 
 - Dashboard charts  
+
